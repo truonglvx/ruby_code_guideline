@@ -162,7 +162,7 @@ All the code blocks, paragraphs that contain complex logics must have comments a
   There is no hard rules for choosing between `if` and `unless`. Use your own judment.
 
 ####**__IV. Loops__**
-  In Ruby, there are many ways to write loops, and there are may formats in each way of loop.<br/>
+  In Ruby, there are many ways to write loops, and there are many formats in each way of loop.<br/>
   Therefore it is always a good idea to read thoroughly about Ruby loops at least once to have a concept about what types of loops are available and in what formats the loops can be written.
 
   Here are just a few of type of loops. Each of them is not even fully listed.
