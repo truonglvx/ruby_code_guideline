@@ -6,7 +6,8 @@
 
 All classes, modules must have comments about their purposes and functionalities.<br/>
 All methods must have comments about their functionalities, parameters and expected input, output<br/>
-All the code blocks, paragraphs that contain complex logics must have comments about what they do, how they do the tasks, and why.
+All the code blocks, paragraphs that contain complex logics must have comments about what they do, how they do the tasks, and why.<br/>
+Write the code documentation in a YARD format to allow automated code documentation extractions
 
 ####**__II. Rule of thumb when using different types of constants and variables__**
 

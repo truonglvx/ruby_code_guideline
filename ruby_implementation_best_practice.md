@@ -1,4 +1,4 @@
-<div align='center'><h2>Ruby Implementation Best Practice<br/>(Still in the middle of writing)</h2></div>
+<div align='center'><h2>Ruby Implementation Best Practice</h2></div>
 
 **This document assumes that the readers already have reasonable knowledge about the following things:**
   - Basic concepts of Object Oriented Programming: Encapsulation, Inheritance, Polymorphism.
@@ -301,11 +301,68 @@ Developers are encouraged to read more in Ruby books, more detailed documents af
   ```
 
 ####**__III. Exception handling__**
-  1.
+  1. Recoverable and Non-recoverable exceptions
+    - Recoverable exceptions are exceptions that the application can try to resolve on its own.
+    
+    For example:
+      When a network call fails due to 'Timeout' or 'Host is not reachable', the application can sleep for a few seconds and try the call again without user/consumer intervention. If it happens, to the user/consumer, the call will be a little slow, but they don't have to do anything to resolve the problems.
 
-Two different types of exceptions: Recoverable and Non-recoverable
-(including when Recoveable exceptions become Non-recoverable exceptions)
+    - Non-recoverable exceptons are exceptions that required user/consumer input to fix the problems.
 
-Differences between Business Errors and System Errors 
+    For example:
+      A user/consumer submits a request with wrong data. The application cannot do anything to fix it. In this case, the application will send back an error code and error message to user/consumer to tell them that they have to fix the data and submit the request again.
+
+    - There must be a time Recoverable exceptions become Non-recoverable exceptions: After the application tries all things within its capability to resolve a Recoverable exception, but it still fails, the exception become Non-recoverable exception.
+
+    For example:
+      When a network call fails due to 'Timeout', the appicaltion tries to sleep few seconds and calls again for a few times (maybe 3 times), but the network call still fails, we must throw an exception about Service Call failed. The application cannot, and should not, wait and try forever.
+
+
+    - Rule of thumbs: All the Business Errors (missing parameters, wrong data format, wrong data content) are Non-recoverable exceptions. Many System Errors are Recoverable exceptions.
+
+  2. Exception handling
+
+    - Catch a Recoverable exception immediately where it happens, try to resolve it programmatically within reasonable time and effort. If it is resolved, great. If the error still happens, log the exception in details for internal use, and raise the exception again.
+
+    - Catch a Non-recoverable exception only at the tier's boundaries or application's boundaries.
+      There is no point to catch a Non-recoverable all over the places, because the application cannot programmatically do anything to resolve it. It requires user/consumer input to fix the problem.
+
+      However, as a security measure, and as a tier-decoupling principle, never let any exception go pass any boundary, be it tier's boundary or application's boundary.
+
+      Example:
+      ```
+      A consumer makes a request to an API Server to get information about an invoice.
+
+      If the call is success, great!
+
+      But there are many things that can go wrong. Here are a few specific examples.
+
+      a - User does not send all required parameters, the validation service within the API Server must detect this problem and throw an exception. This is a Non-recoverable exception, so we don't need to catch it immediately, or catch it all over the places. However, at the controller level, which is the boundary between the API Server and the consumer, we should not let the exception blow up to the consumer face. The controller must catch it, log the details for internal use and render appropriate error with appropriate HTML status code to the consumer.
+
+      b - User send all the required the data. The API Server makes a call to another Service to get invoice details, but the call fails due to Network connection.
+      Although we try a few times, but the call still fails, so it becomes Non-recoverable, and we throw an exception. We will not catch the exception all over the places, because at this point, the appication cannot programmatically do anything with it.
+      But at the boundary of system call and business service, there must be a place you catch it and raise another appropriate exception.
+
+      Reason: Business tier doesn't care about low-level system details such as network exception or the likes. It cares about whether the system layer can give it the invoice it wants or not.
+
+      c - User send all the required the data. The API Server makes a call to another Service to get invoice details. It can make the call, but it comes back with error because of data mismatch. This is a business error, so we just let the exception bubble up all the way upto the application boundary. But at the very least, the controller must catch it, log information details, and render an appropriate response to the consumer.
+
+      ```
+    - Note:
+      . Do not catch exceptions all over the places. Catch exception only if you can programmatically do something about it, or at tier's boudaries or application's boundaries.
+
+      . Never give (render/return) information about exceptions directly to user/consumer. This is a capital offense of security standard.
 
 ####**__VI. Test coverage__**
+
+  1. All of components in the system must have unit tests for all of their public methods.
+
+  2. All of the test cases must cover happy path and failed path.
+
+  3. If a method has multiple branches of executions (if-else, case-when or dynamic code), all the possiblities must have test cases.
+
+  4. The whole application must have a set of comprehensive integration tests. The tests must cover all the entry points (API endpoints, input/output, external system interfaces) of the application.
+
+  5. Before you write code, always write tests first.
+
+  6. When you fix a bug, write test cases to prove that the bug exists, then write code to make the test cases passed.
