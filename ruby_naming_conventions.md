@@ -43,21 +43,21 @@ A bad example: <br/>
   `snsmapping`
 
   __1. Global variables__<br/>
-  Global variable names start with “$”.<br/>
+  Global variable names start with “$” and follow with lower_snake_case.<br/>
   Global variables are available throughout the whole Ruby application. So be careful when using global variables!!!<br/>
 
   For example: `$months_in_year`
     
   __2. Class variables__<br/>
-  Class variables names start with “@@”.<br/>
+  Class variables names start with “@@” and follow with lower_snake_case.<br/>
   When creating a class variable, all instances of the same class in a Ruby application will share the new class variables. Likewise, if a change is made to a class variable, all other instances will see the change too.
 
   __3. Instance variables__<br/>
-  Instance variables names start with “@”.<br/>
+  Instance variables names start with “@” and follow with lower_snake_case.<br/>
   Think about instance variables as places to hold state of specific instances. As a rule of thumb, do not use instance variables as a mean to communicate data between methods within an instance, although you can do so. A better way to communicate data between methods is to pass them via parameters (unless data you want to communicate is really a state of an instance).<br/>
 
   __4. Local variables__<br/>
-  Local variables' names must be a simple snake_case_string.<br/>
+  Local variables' names must be a simple lower_snake_case_string.<br/>
 
 ####**__IV. Method names__**
 All methods in Ruby must be in lower_snake_case.<br/>
@@ -96,7 +96,7 @@ Example of bad names:
   ```
 
 ####**__VI. Meaningful names__**
-One should never use one-character names. Do not name any of your things, no matter however trivial, with only one character..<br/>
+One should never use one-character names. Do not name any of your things, no matter however trivial, with only one character.<br/>
 For example : a, h, e  are bad names..<br/>
 All names must reflect their purposes and functionalities. <br/>
 
