@@ -330,24 +330,24 @@ Developers are encouraged to read more in Ruby books, more detailed documents af
       However, as a security measure, and as a tier-decoupling principle, never let any exception go pass any boundary, be it tier's boundary or application's boundary.
 
       Example:
-      ```
-      A consumer makes a request to an API Server to get information about an invoice.
+      
+        A consumer makes a request to an API Server to get information about an invoice.
 
-      If the call is success, great!
+        If the call is success, great!
 
-      But there are many things that can go wrong. Here are a few specific examples.
+        But there are many things that can go wrong. Here are a few specific examples.
 
-      a - User does not send all required parameters, the validation service within the API Server must detect this problem and throw an exception. This is a Non-recoverable exception, so we don't need to catch it immediately, or catch it all over the places. However, at the controller level, which is the boundary between the API Server and the consumer, we should not let the exception blow up to the consumer face. The controller must catch it, log the details for internal use and render appropriate error with appropriate HTML status code to the consumer.
+        a - User does not send all required parameters, the validation service within the API Server must detect this problem and throw an exception. This is a Non-recoverable exception, so we don't need to catch it immediately, or catch it all over the places. However, at the controller level, which is the boundary between the API Server and the consumer, we should not let the exception blow up to the consumer face. The controller must catch it, log the details for internal use and render appropriate error with appropriate HTML status code to the consumer.
 
-      b - User send all the required the data. The API Server makes a call to another Service to get invoice details, but the call fails due to Network connection.
-      Although we try a few times, but the call still fails, so it becomes Non-recoverable, and we throw an exception. We will not catch the exception all over the places, because at this point, the appication cannot programmatically do anything with it.
-      But at the boundary of system call and business service, there must be a place you catch it and raise another appropriate exception.
+        b - User send all the required the data. The API Server makes a call to another Service to get invoice details, but the call fails due to Network connection.
+        Although we try a few times, but the call still fails, so it becomes Non-recoverable, and we throw an exception. We will not catch the exception all over the places, because at this point, the appication cannot programmatically do anything with it.
+        But at the boundary of system call and business service, there must be a place you catch it and raise another appropriate exception.
 
-      Reason: Business tier doesn't care about low-level system details such as network exception or the likes. It cares about whether the system layer can give it the invoice it wants or not.
+        Reason: Business tier doesn't care about low-level system details such as network exception or the likes. It cares about whether the system layer can give it the invoice it wants or not.
 
-      c - User send all the required the data. The API Server makes a call to another Service to get invoice details. It can make the call, but it comes back with error because of data mismatch. This is a business error, so we just let the exception bubble up all the way upto the application boundary. But at the very least, the controller must catch it, log information details, and render an appropriate response to the consumer.
+        c - User send all the required the data. The API Server makes a call to another Service to get invoice details. It can make the call, but it comes back with error because of data mismatch. This is a business error, so we just let the exception bubble up all the way upto the application boundary. But at the very least, the controller must catch it, log information details, and render an appropriate response to the consumer.
 
-      ```
+      
     - Note:
       . Do not catch exceptions all over the places. Catch exception only if you can programmatically do something about it, or at tier's boudaries or application's boundaries.
 
