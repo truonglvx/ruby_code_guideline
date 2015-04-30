@@ -8,12 +8,12 @@ All classes, modules must have comments about their purposes and functionalities
 All methods must have comments about their functionalities, parameters and expected input, output<br/>
 All the code blocks, paragraphs that contain complex logics must have comments about what they do, how they do the tasks, and why.
 
-####**__II. Rules of thumb about using different types of constants and variables__**
+####**__II. Rule of thumb when using different types of constants and variables__**
 
 1. Global constants:<br/>
-  Use global constants to store information that (ideally) never change.
+  Use global constants to store information that (ideally) will never change.
 
-  Be careful: In Ruby, constants can be reassigned values. So when you write code, please refraint from changing constants' values, unless you have absolutely good reason to do so.
+  Be careful: In Ruby, values assigned to constants can be reassigned. So when you write code, please refrain from changing constants' values, unless you have absolutely good reason to do so.
 
 2. Global variables<br/>
 
@@ -42,36 +42,36 @@ All the code blocks, paragraphs that contain complex logics must have comments a
 
   See file [**code_samples/instance_variables.rb**](https://github.com/linhchauatl/ruby_code_guideline/blob/master/code_samples/instance_variables.rb) for illustration about how not to abuse instance variables.
 
-  In Rails, there are certain places where they missuse the instance variables to pass data between methods in controllers, helpers and views. It was a historical mistake, and DHH (Rails creator) are not very happy about it.
-  Just because we can do something, it is not neccessarily that we should do that thing.
+  In Rails, there are certain places where they missuse the instance variables to pass data between methods in controllers, helpers and views. It was a historical mistake, and DHH (Rails creator) was not very happy about it.
+  Just because we can do something, does not mean that we should necessarily do that thing.
 
 5. Local variables
-  The usage of local variables is straight forward, so there is nothing much to mention here.
+  The usage of local variables is pretty straightforward, so there is nothing much to mention here.
 
 6. Side effect when Ruby objects are passed as parameters
   It is important to remember that in Ruby, parameters are passed into methods as references.<br/>
-  It means that except numbers and strings (they are objects, but special), all other types of objects, including Hash and Array will have side effect when they are passed as parameters to a method.<br/> Their values will be changed if the method performs computation on them.
+  It means that, with the exception of numbers and strings (they are special objects), all other types of objects, including hashes and arrays will have side effects when they are passed as parameters to a method.<br/> Their values will be changed if the method performs computations on them.
 
-  See the file [**code_samples/parameter_side_effect.rb**](https://github.com/linhchauatl/ruby_code_guideline/blob/master/code_samples/parameter_side_effect.rb) for illustration about the side effect of passing parameters into methods.
+  See the file [**code_samples/parameter_side_effect.rb**](https://github.com/linhchauatl/ruby_code_guideline/blob/master/code_samples/parameter_side_effect.rb) for illustrations regarding the side effects of passing parameters into methods.
 
-  Please google or read books about Object#dup, Object#clone, about deep and shallow dup/clone.
+  Please Google or read books about Object#dup, Object#clone, about deep and shallow dup/clone.
 
 ####**__III. Condition checking__**
 
-1. if-elsif-end<br/>
+1. `if-elsif-end` statements<br/>
   Please read about different forms of "if" in a Ruby book or Ruby API docs.<br/>
-  Here I just provide rules of thumb about using `if`
+  Below are some general best practices when using `if`
 
-  - Do not use multi branches of if-elsif- .... -elsif-end. In this case, you should use case-when.
-  - Do not use too many levels of nested if. If you have to use multiple nested level of if, it means that there is something wrong with your logical flows and your application design.
-  - Do not use multil levels of tenary condition checking.
+  - Do not use multi branches of `if-elsif-elsif .... -elsif-end` statements. For these scenarios, you should use `case-when-when ... -when-end` statements.
+  - Do not nest your `if` statements too deep. If you do have to use multiple nested `if` statements, you may want to reassess your logical flows and application design.
+  - Do not use multi levels of tenary condition checking.
   
-  Here is one-level tenary:<br/>
+  Here is a one-level tenary statement:<br/>
   `condition ? value_if_true : value_if_false`
 
   For example:
   ```ruby
-  (size == 'L')? 'Large' : 'Small'
+  (size == 'L') ? 'Large' : 'Small'
   ```
 
   Here is two-level tenary (multi levels) <- **This MUST be avoided at all cost**:
@@ -90,13 +90,13 @@ All the code blocks, paragraphs that contain complex logics must have comments a
   end
   ```
 
-  Or you can use `case-when`.<br/>
+  Or you can use `case-when-end` statements.<br/>
 
-  But, again, in Ruby, when you see yourself using too many branches of `if-else` or you have to use `case-when`, it is most likely that there is something wrong. At this point you should think about reorganizing your logical flows, using hash to map, or externalize things to YML file, or using dynamic programming with certain conventions.
+  But, again, in Ruby, when you see yourself using too many branches of `if-else` or you have to use `case-when`, it is most likely that there is something wrong. At this point you should think about reorganizing your logical flows, using hashes to map, externalize things to a YML file, or using dynamic programming with certain conventions.
 
 
-2. case-when<br/>
-  AGAIN: It is not 100% true, but 99.99% true that when you have to use `case-when` in Ruby, there is something wrong. At this point you should think about reorganizing your logical flows, using hash to map, or externalize things to YML file, or using dynamic programming with certain conventions.
+2. `case-when-end` statments<br/>
+  REPEAT: It is not 100% of the time, but in 99.99% of the time, when you have to use `case-when-end` in Ruby, there is something wrong. At this point you should think about reorganizing your logical flows, using hash to map, externalize things to YML file, or using dynamic programming with certain conventions.
 
   Example about bad ways and good way of checking many branches of conditions: [**code_samples/condition_checking.rb**](https://github.com/linhchauatl/ruby_code_guideline/blob/master/code_samples/condition_checking.rb)
 
@@ -145,7 +145,7 @@ All the code blocks, paragraphs that contain complex logics must have comments a
   end
   ```
 
-5. Special case of checking variable against multple values
+5. Special case of checking variables against multple values
   ```ruby
   # DO NOT WRITE
   if (variable == value_1 || variable == value_2 || variable == value_3) 
@@ -161,9 +161,9 @@ All the code blocks, paragraphs that contain complex logics must have comments a
 6. Use `if` and `unless` wisely to express the logics clearly.<br/>
   There is no hard rules for choosing between `if` and `unless`. Use your own judment.
 
-####**__IV. Loop__**
-  In Ruby, there are many ways to write loop, and there are may formats in each way of loop.<br/>
-  Therefore it is always a good idea to read thoroughly about Ruby loos at least once to have a concept about what types of loops are available and in what formats the loops can be written.
+####**__IV. Loops__**
+  In Ruby, there are many ways to write loops, and there are may formats in each way of loop.<br/>
+  Therefore it is always a good idea to read thoroughly about Ruby loops at least once to have a concept about what types of loops are available and in what formats the loops can be written.
 
   Here are just a few of type of loops. Each of them is not even fully listed.
 
@@ -206,7 +206,7 @@ All the code blocks, paragraphs that contain complex logics must have comments a
 
   We also can use `while` or `until` to loop N times, but we should not do so. 
 
-2. Loop when a condition is still good
+2. Loop when a condition is still true
   ```ruby
     while condition
       do something
@@ -246,7 +246,7 @@ All the code blocks, paragraphs that contain complex logics must have comments a
 
 5. Loop control:
 
-  You should read about: 
+  You should read up about: 
   ```ruby
   break
   next
