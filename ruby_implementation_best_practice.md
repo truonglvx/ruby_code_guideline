@@ -1,4 +1,4 @@
-<div align='center'><h2>Ruby Implementation Best Practice (Still in the middle of writing)</h2></div>
+<div align='center'><h2>Ruby Implementation Best Practice<br/>(Still in the middle of writing)</h2></div>
 
 **This document assumes that the readers already have reasonable knowledge about the following things:**
   - Basic concepts of Object Oriented Programming: Encapsulation, Inheritance, Polymorphism.
@@ -34,7 +34,7 @@ Developers are encouraged to read more in Ruby books, more detailed documents af
   end
   ```
 
-  Ruby also allows methods to reveive arbitrary numbers of parameters. Use ( )
+  Ruby also allows methods to receive arbitrary numbers of parameters. Use ( )
   ```ruby
   def some_method(*parameters)
     # Do something
@@ -51,10 +51,96 @@ Developers are encouraged to read more in Ruby books, more detailed documents af
 2. Early Return principle
 
   Avoid if-else if there is simple condition that allows early exit
+  ```ruby
+  # Do not write this
+  def some_method(some_args)
+    if condition
+      # Do a lot of things here
+      # Do a lot of things here
+      # Do a lot of things here
+      result = some_value_1
+    else
+      # Do something here
+      result = some_value_2
+    end
+    result
+  end
+
+
+  # USE EARLY RETURN
+  # Write this instead
+  def some_method(some_args)
+    unless condition
+      # Do something here
+      return some_value_2
+    end
+   
+    # Do a lot of things here
+    # Do a lot of things here
+    # Do a lot of things here
+    some_value_1
+  end
+
+  # Or write this
+  def some_method(some_args)
+    if !condition
+      # Do something here
+      return some_value_2
+    end
+   
+    # Do a lot of things here
+    # Do a lot of things here
+    # Do a lot of things here
+    some_value_1
+  end
+
+  ```
 
   Avoid nested if-else
+  ```ruby
+  # Do not write this
+  def some_method(some_args)
+    if condition
+      # Do something here
+      result = some_value_1
+    else
+      if another_condition
+        # Do something here
+        result = some_value_2
+      else
+        result = some_value_3
+      end
+    end
+    result
+  end
+
+
+  # Write this instead
+  def some_method(some_args)
+    if condition
+      # Do something here
+      return some_value_1
+    end
+
+    if another_condition
+      # Do something here
+      return some_value_2
+    end
+    
+    some_value_3
+  end
+
+  # In many cases, you can even write something like this
+  def some_method(some_args)
+    return some_value_1 if condition
+    return some_value_2 if another_condition
+    some_value_3
+  end
+  ```
+
 
 3. Break down long methods
+
   Break down repetitive code
 
   Break down common functionalities
