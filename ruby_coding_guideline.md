@@ -1,15 +1,17 @@
 <div align='center'><h2>Ruby Coding Guideline</h2></div>
 
 **This is not a book about teaching Ruby programming language, so all the statements, syntax in this guideline are written about when to use, how to use and best practices. They will not be listed in full syntax and semantics.**
+####**__I. Source code indentation__**
+All the block indentations in Ruby source code must be 2 spaces. NO TAB character.
 
-####**__I. Comment__**
+####**__II. Comment__**
 
 All classes, modules must have comments about their purposes and functionalities.<br/>
 All methods must have comments about their functionalities, parameters and expected input, output<br/>
 All the code blocks, paragraphs that contain complex logics must have comments about what they do, how they do the tasks, and why.<br/>
 Write the code documentation in a YARD format to allow automated code documentation extractions
 
-####**__II. Rule of thumb when using different types of constants and variables__**
+####**__III. Rule of thumb when using different types of constants and variables__**
 
 1. Global constants:<br/>
   Use global constants to store information that (ideally) will never change.
@@ -57,7 +59,7 @@ Write the code documentation in a YARD format to allow automated code documentat
 
   Please Google or read books about Object#dup, Object#clone, about deep and shallow dup/clone.
 
-####**__III. Condition checking__**
+####**__IV. Condition checking__**
 
 1. `if-elsif-end` statements<br/>
   Please read about different forms of "if" in a Ruby book or Ruby API docs.<br/>
@@ -162,7 +164,7 @@ Write the code documentation in a YARD format to allow automated code documentat
 6. Use `if` and `unless` wisely to express the logics clearly.<br/>
   There is no hard rules for choosing between `if` and `unless`. Use your own judment.
 
-####**__IV. Loops__**
+####**__V. Loops__**
   In Ruby, there are many ways to write loops, and there are many formats in each way of loop.<br/>
   Therefore it is always a good idea to read thoroughly about Ruby loops at least once to have a concept about what types of loops are available and in what formats the loops can be written.
 
