@@ -1,17 +1,17 @@
 <div align='center'><h2>Ruby Coding Guideline</h2></div>
 
 **This is not a book about teaching Ruby programming language, so all the statements, syntax in this guideline are written about when to use, how to use and best practices. They will not be listed in full syntax and semantics.**
-####**__I. Source code indentation__**
+##**__I. Source code indentation__**
 All the block indentations in Ruby source code must be 2 spaces. NO TAB character.
 
-####**__II. Comment__**
+##**__II. Comment__**
 
 All classes, modules must have comments about their purposes and functionalities.<br/>
 All methods must have comments about their functionalities, parameters and expected input, output<br/>
 All the code blocks, paragraphs that contain complex logics must have comments about what they do, how they do the tasks, and why.<br/>
 Write the code documentation in a YARD format to allow automated code documentation extractions
 
-####**__III. Rule of thumb when using different types of constants and variables__**
+##**__III. Rule of thumb when using different types of constants and variables__**
 
 1. Global constants:<br/>
   Use global constants to store information that (ideally) will never change.
@@ -37,13 +37,13 @@ Write the code documentation in a YARD format to allow automated code documentat
 3. Class variables<br/>
   All class variables are visible to all instances of a class. And when there is no instance of a class, you still can access the class variables via the class itself.
 
-  See the file [**code_samples/class_variables.rb**](https://github.com/linhchauatl/ruby_code_guideline/blob/master/code_samples/class_variables.rb) for illustration about using class variables.
+  See the file [**code_samples/class_variables.rb**](https://github.com/ksvkba/ruby_code_guideline/blob/master/code_samples/class_variables.rb) for illustration about using class variables.
 
 4. Instance variables
   The purpose of instance variables is to hold the states of instances of objects.
   You should NEVER use instance variables to communicate data between methods of an instance.
 
-  See file [**code_samples/instance_variables.rb**](https://github.com/linhchauatl/ruby_code_guideline/blob/master/code_samples/instance_variables.rb) for illustration about how not to abuse instance variables.
+  See file [**code_samples/instance_variables.rb**](https://github.com/ksvkba/ruby_code_guideline/blob/master/code_samples/instance_variables.rb) for illustration about how not to abuse instance variables.
 
   In Rails, there are certain places where they missuse the instance variables to pass data between methods in controllers, helpers and views. It was a historical mistake, and DHH (Rails creator) was not very happy about it.
   Just because we can do something, does not mean that we should necessarily do that thing.
@@ -55,11 +55,11 @@ Write the code documentation in a YARD format to allow automated code documentat
   It is important to remember that in Ruby, parameters are passed into methods as references.<br/>
   It means that, with the exception of numbers and strings (they are special objects), all other types of objects, including hashes and arrays will have side effects when they are passed as parameters to a method.<br/> Their values will be changed if the method performs computations on them.
 
-  See the file [**code_samples/parameter_side_effect.rb**](https://github.com/linhchauatl/ruby_code_guideline/blob/master/code_samples/parameter_side_effect.rb) for illustrations regarding the side effects of passing parameters into methods.
+  See the file [**code_samples/parameter_side_effect.rb**](https://github.com/ksvkba/ruby_code_guideline/blob/master/code_samples/parameter_side_effect.rb) for illustrations regarding the side effects of passing parameters into methods.
 
   Please Google or read books about Object#dup, Object#clone, about deep and shallow dup/clone.
 
-####**__IV. Condition checking__**
+##**__IV. Condition checking__**
 
 1. `if-elsif-end` statements<br/>
   Please read about different forms of "if" in a Ruby book or Ruby API docs.<br/>
@@ -164,7 +164,7 @@ Write the code documentation in a YARD format to allow automated code documentat
 6. Use `if` and `unless` wisely to express the logics clearly.<br/>
   There is no hard rules for choosing between `if` and `unless`. Use your own judment.
 
-####**__V. Loops__**
+##**__V. Loops__**
   In Ruby, there are many ways to write loops, and there are many formats in each way of loop.<br/>
   Therefore it is always a good idea to read thoroughly about Ruby loops at least once to have a concept about what types of loops are available and in what formats the loops can be written.
 
